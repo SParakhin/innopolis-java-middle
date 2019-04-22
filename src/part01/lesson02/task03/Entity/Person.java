@@ -1,6 +1,6 @@
-package part01.lesson02.task03;
+package part01.lesson02.task03.Entity;
 
-public class Person {
+public class Person implements Comparable<Person> {
 
     private String name;
     private int age;
@@ -34,10 +34,20 @@ public class Person {
 
     @Override
     public String toString() {
-        return "Person{" +
-                "name='" + name + '\'' +
-                ", age=" + age +
-                ", sex=" + sex +
-                '}';
+        return
+                sex + "=" + age + "=" + name;
+    }
+
+    @Override
+    public int compareTo(Person o) {
+        int sexCompare = this.getSex().compareTo(o.getSex());
+        if (sexCompare != 0) {
+            return sexCompare;
+        }
+        int ageCompare = o.getAge() - this.getAge();
+        if (ageCompare != 0) {
+            return ageCompare;
+        }
+        return this.getName().compareTo(o.getName());
     }
 }

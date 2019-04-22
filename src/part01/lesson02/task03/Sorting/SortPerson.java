@@ -1,4 +1,6 @@
-package part01.lesson02.task03;
+package part01.lesson02.task03.Sorting;
+
+import part01.lesson02.task03.Entity.Person;
 
 import java.util.Comparator;
 
