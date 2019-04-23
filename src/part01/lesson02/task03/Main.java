@@ -13,10 +13,10 @@
  */
 package part01.lesson02.task03;
 
-import part01.lesson02.task03.Entity.Person;
-import part01.lesson02.task03.Entity.Sex;
-import part01.lesson02.task03.Exception.MatchesException;
-import part01.lesson02.task03.Sorting.SortPerson;
+import part01.lesson02.task03.entity.Person;
+import part01.lesson02.task03.entity.Sex;
+import part01.lesson02.task03.exception.MatchesException;
+import part01.lesson02.task03.sorting.SortPerson;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -42,8 +42,8 @@ public class Main {
             System.out.println(p);
         }
 
-        System.out.println("========Print array with second sorting");
-        secondSorting(person);
+        System.out.println("========== Print array with bubble sorting");
+        bubbleSort(person);
         for (Person p : person) {
             System.out.println(p);
         }
@@ -58,35 +58,36 @@ public class Main {
         }
     }
 
-
     /**
-     * Сортировка по полу, возрасту, имени. Интерфейс Comparable.
+     * Сортировка пузырьком
      *
-     * @param
-     * @return
+     * @param person Массив объектов person
      */
-    protected static long secondSorting(Person[] person) {
+    private static void bubbleSort(Person[] person) {
         long startSortingTimeSecondAlgoritm = System.currentTimeMillis();
-        Arrays.sort(person, Person::compareTo);
+        for (int j = 0; j < person.length - 1; j++) {
+            if (person[j + 1].compareTo(person[j]) < 0) {
+                Person temp = person[j];
+                person[j] = person[j + 1];
+                person[j + 1] = temp;
+            }
+        }
         long finishSortingTimeSecondAlgoritm = System.currentTimeMillis();
         long result = finishSortingTimeSecondAlgoritm - startSortingTimeSecondAlgoritm;
         System.out.println("========Time sorting second algoritm" + " " + result);
-        return result;
     }
 
     /**
      * Сортировка по возрасту, полу,имени. Интерфейс Comparator.
      *
-     * @param person
-     * @return время работы алгоритма сортировки
+     * @param person Массив объектов
      */
-    protected static long firstSorting(Person[] person) {
+    private static void firstSorting(Person[] person) {
         long startSortingTimeFirstAlgoritm = System.currentTimeMillis();
         Arrays.sort(person, new SortPerson());
         long finishSortingTimeFirstAlgoritm = System.currentTimeMillis();
         long result = finishSortingTimeFirstAlgoritm - startSortingTimeFirstAlgoritm;
         System.out.println("========Time sorting first algoritm" + " " + result);
-        return result;
     }
 
     /**
@@ -96,7 +97,7 @@ public class Main {
      * @param <T>
      * @return
      */
-    protected static <T extends Enum<?>> T randomEnum(Class<T> clazz) {
+    private static <T extends Enum<?>> T randomEnum(Class<T> clazz) {
         int x = new Random().nextInt(clazz.getEnumConstants().length);
         return clazz.getEnumConstants()[x];
     }
@@ -106,7 +107,7 @@ public class Main {
      *
      * @return
      */
-    protected static String generatedNameForArray() {
+    private static String generatedNameForArray() {
         String symbols = "abc";
         StringBuilder randString = new StringBuilder();
         Random random = new Random();
