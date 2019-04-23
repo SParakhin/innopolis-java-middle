@@ -17,6 +17,7 @@ import part01.lesson02.task03.entity.Person;
 import part01.lesson02.task03.entity.Sex;
 import part01.lesson02.task03.exception.MatchesException;
 import part01.lesson02.task03.sorting.SortPerson;
+
 import java.util.Arrays;
 import java.util.Random;
 
@@ -31,6 +32,8 @@ public class Main {
             person[i] = new Person(generatedNameForArray(), age, randomEnum(Sex.class));
         }
 
+        Person[] destination = Arrays.copyOf(person, person.length);
+
         System.out.println("========Print array without sorting");
         for (Person p : person) {
             System.out.println(p);
@@ -43,8 +46,8 @@ public class Main {
         }
 
         System.out.println("========== Print array with bubble sorting");
-        bubbleSort(person);
-        for (Person p : person) {
+        bubbleSort(destination);
+        for (Person p : destination) {
             System.out.println(p);
         }
 
@@ -63,13 +66,15 @@ public class Main {
      *
      * @param person Массив объектов person
      */
-    private static void bubbleSort(Person[] person) {
+    static void bubbleSort(Person[] person) {
         long startSortingTimeSecondAlgoritm = System.currentTimeMillis();
-        for (int j = 0; j < person.length - 1; j++) {
-            if (person[j + 1].compareTo(person[j]) < 0) {
-                Person temp = person[j];
-                person[j] = person[j + 1];
-                person[j + 1] = temp;
+        for (int i = person.length - 1; i > 0; i--) {
+            for (int j = 0; j < i; j++) {
+                if (person[j + 1].compareTo(person[j]) < 0) {
+                    Person temp = person[j + 1];
+                    person[j + 1] = person[j];
+                    person[j] = temp;
+                }
             }
         }
         long finishSortingTimeSecondAlgoritm = System.currentTimeMillis();
@@ -82,7 +87,7 @@ public class Main {
      *
      * @param person Массив объектов
      */
-    private static void firstSorting(Person[] person) {
+    static void firstSorting(Person[] person) {
         long startSortingTimeFirstAlgoritm = System.currentTimeMillis();
         Arrays.sort(person, new SortPerson());
         long finishSortingTimeFirstAlgoritm = System.currentTimeMillis();
@@ -111,8 +116,9 @@ public class Main {
         String symbols = "abc";
         StringBuilder randString = new StringBuilder();
         Random random = new Random();
-        for (int i = 0; i < symbols.length(); i++)
+        for (int i = 0; i < symbols.length(); i++) {
             randString.append(symbols.charAt(random.nextInt(symbols.length())));
+        }
         return randString.toString();
     }
 }
