@@ -20,15 +20,14 @@ public class HelloWorld {
         }
 
         int[] array = new int[10];
-        int x = array[11];
         try {
-            System.out.println(x);
+            int x = array[11];
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         int a = 5;
-        if (a / 5 < 0) {
+        if (a / 5 > 0) {
             throw new MyException("My exception");
         }
     }
