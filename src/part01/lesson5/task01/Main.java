@@ -1,11 +1,3 @@
-package part01.lesson5.task01;
-
-import part01.lesson5.task01.entity.Animal;
-import part01.lesson5.task01.entity.Person;
-import part01.lesson5.task01.sorting.SortAnimal;
-
-import java.util.*;
-
 /**
  * ДЗ_4
  * Разработать программу – картотеку домашних животных. У каждого животного есть уникальный идентификационный номер, кличка, хозяин (объект класс Person с полями – имя, возраст, пол), вес.
@@ -18,6 +10,13 @@ import java.util.*;
  * вывод на экран списка животных в отсортированном порядке. Поля для сортировки –  хозяин, кличка животного, вес.
  * Тестовый класс
  */
+
+package part01.lesson5.task01;
+
+import part01.lesson5.task01.entity.Animal;
+import part01.lesson5.task01.entity.Person;
+import part01.lesson5.task01.sorting.SortAnimal;
+import java.util.*;
 
 public class Main {
 
