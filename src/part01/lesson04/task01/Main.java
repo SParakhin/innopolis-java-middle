@@ -1,7 +1,5 @@
 package part01.lesson04.task01;
 
-import part01.lesson04.task01.MathBox;
-
 public class Main {
 
     public static void main(String[] args) {

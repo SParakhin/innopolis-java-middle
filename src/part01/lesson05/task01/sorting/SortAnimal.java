@@ -1,6 +1,6 @@
-package part01.lesson5.task01.sorting;
+package part01.lesson05.task01.sorting;
 
-import part01.lesson5.task01.entity.Animal;
+import part01.lesson05.task01.entity.Animal;
 
 import java.util.Comparator;
 

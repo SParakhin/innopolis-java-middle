@@ -15,9 +15,20 @@ public class ObjectBox {
 
     Set<Object> list = new HashSet<>();
 
+    /**
+     * Метод для добавления объекта в коллекцию
+     * @param object
+     */
     public void addAll(Object object) {
         list.add(object);
     }
+
+    /**
+     * Метод для удаления объекта из коллекции
+     * @param list
+     * @param object
+     * @return
+     */
 
     public Set<Object> deleteObject(Set<Object> list, Object object) {
         Iterator iterator = list.iterator();
@@ -30,6 +41,10 @@ public class ObjectBox {
         return list;
     }
 
+    /**
+     * Метод для печати коллекции в строку
+     * @param list
+     */
     void dump(Set<Object> list) {
         for (Object o : list) {
             System.out.print(o + " ");

@@ -11,11 +11,11 @@
  * Тестовый класс
  */
 
-package part01.lesson5.task01;
+package part01.lesson05.task01;
 
-import part01.lesson5.task01.entity.Animal;
-import part01.lesson5.task01.entity.Person;
-import part01.lesson5.task01.sorting.SortAnimal;
+import part01.lesson05.task01.entity.Animal;
+import part01.lesson05.task01.entity.Person;
+import part01.lesson05.task01.sorting.SortAnimal;
 import java.util.*;
 
 public class Main {
