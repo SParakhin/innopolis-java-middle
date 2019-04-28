@@ -1,4 +1,4 @@
-package part01.lesson5.task01.entity;
+package part01.lesson05.task01.entity;
 
 import java.util.Objects;
 
