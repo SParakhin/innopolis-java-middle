@@ -82,7 +82,7 @@ public class Main {
      * @return
      */
     static String getComma() {
-        String[] comma = {",", " "};
+        String[] comma = {", ", " "};
         return comma[new Random().nextInt(comma.length)];
     }
 
@@ -107,11 +107,11 @@ public class Main {
                         sentense[i] = capitalized.trim() + getPunctuationMark();
                         if (sentense[i].endsWith(",?") || sentense[i].endsWith(",!") || sentense[i].endsWith(",.")) {
                             StringBuilder sb1 = new StringBuilder(sentense[i]);
-                            sentense[i] = sb1.deleteCharAt(sb.length() - 1).toString();
+                            sentense[i] = sb1.deleteCharAt(sb.length() - 2).toString().trim();
                         }
                         sb.delete(0, sb.length());
-                        sb.delete(0, sb.length());
                         break;
+
                     }
                 }
             }
