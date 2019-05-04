@@ -11,43 +11,37 @@ import java.util.*;
 
 class MathBox extends ObjectBox {
 
-    private Number[] numbers;
-
-    public MathBox(Number[] numbers) {
-        this.numbers = numbers;
-    }
-
     Set<Number> store = new HashSet<>();
 
-    /**
-     * Метод для преобразования массива в коллекцию
-     * @param numbers Массив чисел
-     */
+    public MathBox(Number[] numbers) {
+        this.store.addAll(Arrays.asList(numbers));
+    }
 
-    public void addAll(Number[] numbers) {
-        for (Number t : numbers) {
+    /**
+     * Метод для добавления элемента в коллекцию.При попытке добавить в коллекцию класса MathBox элемент, отличный от Number[],
+     * выбрасывается исключение (по условиям задания).
+     */
+    @Override
+    void addAll(Object object) {
+        if (!(object instanceof Number[])) {
             try {
-                if (numbers instanceof Number[]) {
-                    store.add(t);
-                } else {
-                    throw new Exception("Невозможно добавить элемент.Введите число");
-                }
+                throw new Exception("В MathBox невозможно добавить элемент " + "\\" + object + "\\\"" + " Введите массив чисел");
             } catch (Exception e) {
                 System.err.println(e);
             }
+            super.addAll(object);
         }
-        super.addAll(numbers);
+
     }
 
     /**
      * Метод для нахождения суммы всех элементов списка чисел
      *
-     * @param store Список элементов для суммирования
-     * @return сумма элементов списка
+     * @return сумма элементов коллекции
      */
-    double summator(Set<Number> store) {
+    double summator() {
         double sum = 0;
-        for (Number t : store) {
+        for (Number t : this.store) {
             sum += t.doubleValue();
         }
         return sum;
@@ -56,36 +50,40 @@ class MathBox extends ObjectBox {
     /**
      * Метод для деления всех элементов спика на делитель
      *
-     * @param store список элементов для деления
-     * @param div   делитель
+     * @param div делитель
      * @return новый список элементов после деления
      */
-
-    Set splitter(Set<Number> store, long div) {
-        Set<? super Number> newStore = new HashSet<>();
-        for (Number t : store) {
+    Set<Number> splitter(long div) {
+        Set<Number> newStore = new HashSet<>();
+        for (Number t : this.store) {
             newStore.add(t.longValue() / div);
         }
         return newStore;
     }
 
     @Override
-    public Set<? extends Object> deleteObject(Set<? extends Object> list, Object object) {
-        try {
-            if (!(object instanceof Number)) {
-                throw new Exception("Невозможно удалить элемент.Введите число");
-            }
-        } catch (Exception e) {
-            System.err.println(e);
+    void dump() {
+        for (Number n : this.store) {
+            System.out.print(n + " ");
         }
-        return super.deleteObject(list, object);
+    }
+
+
+    Set<Number> deleteInteger(Integer del) {
+        Set<Integer> tmp = new HashSet<>();
+        for (Number t : this.store) {
+            if (t == del) {
+                tmp.add((Integer) t);
+            }
+        }
+        this.store.removeAll(tmp);
+        return this.store;
     }
 
     @Override
     public String toString() {
         return "MathBox{" +
-                "numbers=" + Arrays.toString(numbers) +
-                ", store=" + store +
+                "store=" + store +
                 '}';
     }
 
@@ -95,14 +93,13 @@ class MathBox extends ObjectBox {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         MathBox mathBox = (MathBox) o;
-        return Arrays.equals(numbers, mathBox.numbers) &&
-                Objects.equals(store, mathBox.store);
+        return Objects.equals(store, mathBox.store);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(super.hashCode(), store);
-        result = 31 * result + Arrays.hashCode(numbers);
-        return result;
+        return Objects.hash(super.hashCode(), store);
     }
 }
+
+

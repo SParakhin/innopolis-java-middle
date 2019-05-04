@@ -11,42 +11,40 @@ import java.util.*;
 
 public class ObjectBox {
 
-    private Object object;
-
     Set<Object> list = new HashSet<>();
 
     /**
      * Метод для добавления объекта в коллекцию
+     *
      * @param object
      */
-    public void addAll(Object object) {
-        list.add(object);
+    void addAll(Object object) {
+        this.list.add(object);
     }
 
     /**
      * Метод для удаления объекта из коллекции
-     * @param list
-     * @param object
-     * @return
+     * * @param object Объект для удаления из коллекции
+     *
+     * @return Коллекция объектов после удаления элемента
      */
 
-    public Set<Object> deleteObject(Set<Object> list, Object object) {
-        Iterator iterator = list.iterator();
+    Set<Object> deleteObject(Object object) {
+        Iterator iterator = this.list.iterator();
         while (iterator.hasNext()) {
             Object t = iterator.next();
             if (t.equals(object) || t == object) {
                 iterator.remove();
             }
         }
-        return list;
+        return this.list;
     }
 
     /**
      * Метод для печати коллекции в строку
-     * @param list
      */
-    void dump(Set<Object> list) {
-        for (Object o : list) {
+    void dump() {
+        for (Object o : this.list) {
             System.out.print(o + " ");
         }
     }
@@ -54,8 +52,7 @@ public class ObjectBox {
     @Override
     public String toString() {
         return "ObjectBox{" +
-                "object=" + object +
-                ", list=" + list +
+                "list=" + list +
                 '}';
     }
 
@@ -64,12 +61,11 @@ public class ObjectBox {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ObjectBox objectBox = (ObjectBox) o;
-        return Objects.equals(object, objectBox.object) &&
-                Objects.equals(list, objectBox.list);
+        return Objects.equals(list, objectBox.list);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(object, list);
+        return Objects.hash(list);
     }
 }
