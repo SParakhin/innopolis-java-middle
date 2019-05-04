@@ -12,7 +12,7 @@ public class Animal {
     private int weight;
     private Person person;
 
-    public Animal(int id, String name,int weight) {
+    public Animal(int id, String name, int weight) {
         this.id = id;
         this.name = name;
         this.weight = weight;
@@ -29,7 +29,7 @@ public class Animal {
         this.weight = weight;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
@@ -77,5 +77,13 @@ public class Animal {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, weight, person);
+    }
+
+    public Integer getId(int id) {
+        return id;
+    }
+
+    public String getName(String name) {
+        return name;
     }
 }
