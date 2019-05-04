@@ -1,7 +1,8 @@
 /**
  * Задание 1. Написать класс MathBox, реализующий следующий функционал:
  * <p>
- * Конструктор на вход получает массив Number. Элементы не могут повторяться. Элементы массива внутри объекта раскладываются в подходящую коллекцию (выбрать самостоятельно).
+ * Конструктор на вход получает массив Number. Элементы не могут повторяться. Элементы массива внутри объекта раскладываются
+ * в подходящую коллекцию (выбрать самостоятельно).
  * Существует метод summator, возвращающий сумму всех элементов коллекции.
  * Существует метод splitter, выполняющий поочередное деление всех хранящихся в объекте элементов на делитель, являющийся аргументом метода. Хранящиеся в объекте данные полностью заменяются результатами деления.
  * Необходимо правильно переопределить методы toString, hashCode, equals, чтобы можно было использовать MathBox для вывода данных на экран и хранение объектов этого класса в коллекциях (например, hashMap). Выполнение контракта обязательно!
@@ -12,38 +13,25 @@ package part01.lesson04.task01;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class MathBox {
 
-    private Number[] numbers;
-
-    public MathBox(Number[] numbers) {
-        this.numbers = numbers;
-    }
-
     Set<Number> store = new HashSet<>();
 
-    /**
-     * Метод для преобразования массива чисел в список
-     *
-     * @param numbers Входной массив
-     */
-    void addAll(Number[] numbers) {
-        for (Number t : numbers) {
-            store.add(t);
-        }
+    public MathBox(Number[] numbers) {
+        this.store.addAll(Arrays.asList(numbers));
     }
 
     /**
      * Метод для нахождения суммы всех элементов списка чисел
      *
-     * @param store Список элементов для суммирования
-     * @return сумма элементов списка
+     * @return сумма элементов коллекции
      */
-    double summator(Set<Number> store) {
+    double summator() {
         double sum = 0;
-        for (Number t : store) {
+        for (Number t : this.store) {
             sum += t.doubleValue();
         }
         return sum;
@@ -52,14 +40,12 @@ public class MathBox {
     /**
      * Метод для деления всех элементов спика на делитель
      *
-     * @param store список элементов для деления
-     * @param div   делитель
+     * @param div делитель
      * @return новый список элементов после деления
      */
-
-    public Set<Number> splitter(Set<Number> store, long div) {
+    Set<Number> splitter(long div) {
         Set<Number> newStore = new HashSet<>();
-        for (Number t : store) {
+        for (Number t : this.store) {
             newStore.add(t.longValue() / div);
         }
         return newStore;
@@ -68,25 +54,37 @@ public class MathBox {
     /**
      * Метод для удаления из списка совпадающего значения типа Integer
      *
-     * @param store Список для удаления элементов
-     * @param del   Значение для удаления
+     * @param del Значение для удаления
      * @return Новый список без удаленного элемента
      */
-    public Set<Number> deleteInteger(Set<Number> store, Integer del) {
+    Set<Number> deleteInteger(Integer del) {
         Set<Integer> tmp = new HashSet<>();
-        for (Number t : store) {
+        for (Number t : this.store) {
             if (t == del) {
                 tmp.add((Integer) t);
             }
         }
-        store.removeAll(tmp);
-        return store;
+        this.store.removeAll(tmp);
+        return this.store;
     }
 
     @Override
     public String toString() {
         return "MathBox{" +
-                "numbers=" + Arrays.toString(numbers) +
+                "store=" + store +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MathBox mathBox = (MathBox) o;
+        return Objects.equals(store, mathBox.store);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(store);
     }
 }

@@ -10,10 +10,10 @@ public class Main {
         objectBox.addAll("строка");
         objectBox.addAll(3);
         System.out.println("====== Содержимое коллекции объектов");
-        objectBox.dump(objectBox.list);
-        objectBox.deleteObject(objectBox.list,1);
+        objectBox.dump();
+        objectBox.deleteObject(1);
         System.out.println("\n");
         System.out.println("======Содержимое коллекции объектов после удаления элемента");
-        objectBox.dump(objectBox.list);
+        objectBox.dump();
     }
 }
