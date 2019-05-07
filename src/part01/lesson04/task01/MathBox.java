@@ -58,13 +58,7 @@ public class MathBox {
      * @return Новый список без удаленного элемента
      */
     Set<Number> deleteInteger(Integer del) {
-        Set<Integer> tmp = new HashSet<>();
-        for (Number t : this.store) {
-            if (t == del) {
-                tmp.add((Integer) t);
-            }
-        }
-        this.store.removeAll(tmp);
+        this.store.remove(del);
         return this.store;
     }
 

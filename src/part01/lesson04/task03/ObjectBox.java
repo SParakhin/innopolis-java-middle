@@ -1,47 +1,36 @@
 package part01.lesson04.task03;
 
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Objects;
 import java.util.Set;
 
-public class ObjectBox {
+public class ObjectBox<T> {
 
-    Set<Object> list = new HashSet<>();
+    Set<T> list = new HashSet<>();
 
-    void addAll(Object object) {
-        this.list.add(object);
+    void addAll(T object) {
+        list.add(object);
     }
 
-    Set<? extends Object> deleteObject(Object object) {
-        Iterator iterator = this.list.iterator();
-        while (iterator.hasNext()) {
-            Object o = iterator.next();
-            if (o.equals(object) || o == object) {
-                iterator.remove();
-            }
-        }
-        return this.list;
+    Set<T> deleteObject(T object) {
+        list.remove(object);
+        return list;
     }
 
     void dump() {
-        for (Object t : this.list) {
-            System.out.println(t + " ");
-        }
+        System.out.print(list.toString());
     }
 
     @Override
     public String toString() {
-        return "ObjectBox{" +
-                "list=" + list +
-                '}';
+        return "," + list;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ObjectBox objectBox = (ObjectBox) o;
+        ObjectBox<?> objectBox = (ObjectBox<?>) o;
         return Objects.equals(list, objectBox.list);
     }
 
