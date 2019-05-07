@@ -30,13 +30,7 @@ public class ObjectBox {
      */
 
     Set<Object> deleteObject(Object object) {
-        Iterator iterator = this.list.iterator();
-        while (iterator.hasNext()) {
-            Object t = iterator.next();
-            if (t.equals(object) || t == object) {
-                iterator.remove();
-            }
-        }
+        list.remove(object);
         return this.list;
     }
 
