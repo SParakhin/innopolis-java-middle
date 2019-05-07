@@ -9,29 +9,22 @@ package part01.lesson04.task03;
 
 import java.util.*;
 
-class MathBox extends ObjectBox {
+class MathBox extends ObjectBox<Number> {
 
-    Set<Number> store = new HashSet<>();
+    Set<Number> store = super.list;
 
     public MathBox(Number[] numbers) {
         this.store.addAll(Arrays.asList(numbers));
     }
 
     /**
-     * Метод для добавления элемента в коллекцию.При попытке добавить в коллекцию класса MathBox элемент, отличный от Number[],
-     * выбрасывается исключение (по условиям задания).
+     * Метод для добавления элемента в коллекцию.
+     *
+     * @param object Объект типа Number
      */
     @Override
-    void addAll(Object object) {
-        if (!(object instanceof Number[])) {
-            try {
-                throw new Exception("В MathBox невозможно добавить элемент " + "\\" + object + "\\\"" + " Введите массив чисел");
-            } catch (Exception e) {
-                System.err.println(e);
-            }
-            super.addAll(object);
-        }
-
+    void addAll(Number object) {
+        super.addAll(object);
     }
 
     /**
@@ -63,21 +56,7 @@ class MathBox extends ObjectBox {
 
     @Override
     void dump() {
-        for (Number n : this.store) {
-            System.out.print(n + " ");
-        }
-    }
-
-
-    Set<Number> deleteInteger(Integer del) {
-        Set<Integer> tmp = new HashSet<>();
-        for (Number t : this.store) {
-            if (t == del) {
-                tmp.add((Integer) t);
-            }
-        }
-        this.store.removeAll(tmp);
-        return this.store;
+        System.out.println(store.toString());
     }
 
     @Override
@@ -85,6 +64,11 @@ class MathBox extends ObjectBox {
         return "MathBox{" +
                 "store=" + store +
                 '}';
+    }
+
+    Set<Number> deleteInteger(Integer del) {
+        this.store.remove(del);
+        return this.store;
     }
 
     @Override
@@ -101,5 +85,3 @@ class MathBox extends ObjectBox {
         return Objects.hash(super.hashCode(), store);
     }
 }
-
-

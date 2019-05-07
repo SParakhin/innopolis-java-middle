@@ -43,17 +43,14 @@ public class ObjectBox {
     /**
      * Метод для печати коллекции в строку
      */
+
     void dump() {
-        for (Object o : this.list) {
-            System.out.print(o + " ");
-        }
+        System.out.print(list.toString());
     }
 
     @Override
     public String toString() {
-        return "ObjectBox{" +
-                "list=" + list +
-                '}';
+        return "list=" + list;
     }
 
     @Override
