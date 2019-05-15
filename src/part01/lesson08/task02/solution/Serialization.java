@@ -9,8 +9,9 @@ public class Serialization {
 
     /**
      * Метод для сериализации объекта в файл
+     *
      * @param object Объект для сериализации
-     * @param file Файл для сохранения состояния объекта
+     * @param file   Файл для сохранения состояния объекта
      */
     public static void serialize(Object object, String file) {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
@@ -24,6 +25,7 @@ public class Serialization {
 
     /**
      * Класс для десериализации объекта
+     *
      * @param file Файл для чтения состояния объекта
      * @return Объект с восстановленным состоянием
      */

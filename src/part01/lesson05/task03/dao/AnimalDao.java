@@ -2,6 +2,7 @@ package part01.lesson05.task03.dao;
 
 import part01.lesson05.task03.entity.Animal;
 import part01.lesson05.task03.sorting.SortAnimal;
+
 import java.util.*;
 
 public class AnimalDao {
@@ -10,9 +11,10 @@ public class AnimalDao {
 
     /**
      * Метод для формирования промежуточной карты для эффективного поиска животного по кличке
+     *
      * @return Карта с ключом Name, параметром - списком животных
      */
-    public static Map<String, Set<Animal>> getAnimalMapByNameKey() {
+    static Map<String, Set<Animal>> getAnimalMapByNameKey() {
         Map<String, Set<Animal>> nameAnimalValue = new HashMap<>();
         Set<Integer> integerSet = animalMap.keySet();
         Set<Animal> arrayList = new HashSet<>();
@@ -34,11 +36,14 @@ public class AnimalDao {
 
     /**
      * Метод для поиска животного по кличке. Учтена возможность поиска животных с совпадающими именами, но уникальными id.
-     * @param map
+     *
      * @param name
      */
-    public static void getAnimalByName(Map<String, Set<Animal>> map, String name) {
-        System.out.println(map.get(name));
+//    public static void getAnimalByName(Map<String, Set<Animal>> map, String name) {
+//        System.out.println(map.get(name));
+//    }
+    public static void getAnimalByName(String name) {
+        System.out.println(getAnimalMapByNameKey().get(name));
     }
 
 

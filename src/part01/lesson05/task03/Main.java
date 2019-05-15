@@ -17,8 +17,6 @@ import part01.lesson05.task03.entity.Animal;
 import part01.lesson05.task03.entity.Person;
 import part01.lesson05.task03.entity.Sex;
 import part01.lesson05.task03.util.Sequence;
-import java.util.Map;
-import java.util.Set;
 
 import static part01.lesson05.task03.dao.AnimalDao.*;
 
@@ -35,14 +33,12 @@ public class Main {
         Animal animal4 = new Animal(sequence.nextValue(), "Барсик", 5);
         Animal animal5 = new Animal(sequence.nextValue(), "Черныш", 7);
 
-
         Person person = new Person("Сергей", 43, Sex.MAN);
         Person person1 = new Person("Дима", 30, Sex.MAN);
         Person person2 = new Person("Света", 30, Sex.WOMAN);
         Person person3 = new Person("Оля", 35, Sex.WOMAN);
         Person person4 = new Person("Оксана", 20, Sex.WOMAN);
         Person person5 = new Person("Сергей", 20, Sex.MAN);
-
 
         animal.setPerson(person);
         animal1.setPerson(person1);
@@ -60,22 +56,17 @@ public class Main {
 
         System.out.println("==Попытка добавить животное с существующими параметрами");
         addAnimal(animal.getId(), animal);
-
         System.out.println(animalMap);
         System.out.println("==Поиск животного по id " + getAnimalById(5));
-
+        System.out.println("=====Поиск Черныш до изменения параметров");
+        getAnimalByName("Черныш");
         System.out.println("==Изменение параметров животного (вес) " + updateAnimal(5, 15));
-
+        System.out.println("==Поиск Черныш после изменения параметров");
+        getAnimalByName("Черныш");
         System.out.println("==Поиск совпадений по имени");
-        Map<String, Set<Animal>> animalMapByNameKey = getAnimalMapByNameKey();
-        getAnimalByName(animalMapByNameKey,"Пушок");
-        getAnimalByName(animalMapByNameKey,"Васька");
-
+        getAnimalByName("Пушок");
+        getAnimalByName("Васька");
         System.out.println("==Вывод в отсортированном порядке - Хозяин, кличка животного, вес");
         sortedAnimalsMap();
-
-
     }
 }
-
-

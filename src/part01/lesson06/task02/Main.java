@@ -14,13 +14,16 @@
 
 package part01.lesson06.task02;
 
+import java.util.Properties;
+
 import static part01.lesson06.task02.solution.Solution.getFiles;
 import static part01.lesson06.task02.solution.Solution.getWordsArray;
 import static part01.lesson06.task02.util.ReadProperties.getProperties;
 
 public class Main {
 
-    private static final String PATH_TO_OUTPUT_FILES = getProperties("outputFiles");
+    static Properties prop = getProperties();
+    static final String PATH_TO_OUTPUT_FILES = prop.getProperty("outputFiles");
 
     public static void main(String[] args) {
         String[] words = getWordsArray();

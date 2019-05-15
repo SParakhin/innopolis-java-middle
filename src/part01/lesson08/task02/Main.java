@@ -12,20 +12,23 @@ package part01.lesson08.task02;
 import part01.lesson08.task02.entity.Person;
 import part01.lesson08.task02.entity.Animal;
 
+import java.util.Properties;
+
 import static part01.lesson08.task02.solution.Serialization.deSerialize;
 import static part01.lesson08.task02.solution.Serialization.serialize;
 import static part01.lesson08.task02.util.ReadProperties.getProperties;
 
 public class Main {
 
-    private static final String SERIALIZED_FILE = getProperties("serializedFile");
+    private static final Properties prop = getProperties();
+    private static final String SERIALIZED_FILE = prop.getProperty("serializedFile");
 
     public static void main(String[] args) {
 
         Person person = new Person("Сергей", 44, 180.2, true);
-        Animal animal = new Animal("Васька",5,4.8);
+        Animal animal = new Animal("Васька", 5, 4.8);
         person.setAnimal(animal);
-        serialize(person,SERIALIZED_FILE);
+        serialize(person, SERIALIZED_FILE);
         Person deSerializePerson = (Person) deSerialize(SERIALIZED_FILE);
         System.out.println(deSerializePerson);
     }
