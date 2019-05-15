@@ -9,9 +9,9 @@ public class Person {
 
     private String name;
     private int age;
-    private String sex;
+    private final Sex sex;
 
-    public Person(String name, int age, String sex) {
+    public Person(String name, int age, Sex sex) {
         this.name = name;
         this.age = age;
         this.sex = sex;
@@ -33,13 +33,10 @@ public class Person {
         this.age = age;
     }
 
-    public String getSex() {
+    public Sex getSex() {
         return sex;
     }
 
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
 
     @Override
     public String toString() {

@@ -18,16 +18,6 @@ class MathBox extends ObjectBox<Number> {
     }
 
     /**
-     * Метод для добавления элемента в коллекцию.
-     *
-     * @param object Объект типа Number
-     */
-    @Override
-    void addAll(Number object) {
-        super.addAll(object);
-    }
-
-    /**
      * Метод для нахождения суммы всех элементов списка чисел
      *
      * @return сумма элементов коллекции

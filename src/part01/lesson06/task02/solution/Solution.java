@@ -1,7 +1,6 @@
 package part01.lesson06.task02.solution;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Random;
@@ -35,7 +34,7 @@ public class Solution {
         for (int i = 0; i < paragraph.length; i++) {
             for (int j = 0; j < sentense.length; j++) {
                 if (sentense[j] != null) {
-                    paragraph[i] = sb.append(sentense[new Random().nextInt(paragraph.length)] + " " + "\n").toString();
+                    paragraph[i] = sb.append(sentense[new Random().nextInt(paragraph.length)]).append(" ").append("\n").toString();
                     if (j >= new Random().nextInt(20)) {
                         sb.delete(0, sb.length());
                         break;
@@ -136,8 +135,6 @@ public class Solution {
                     fileOutputStream.write("\n".getBytes());
                 }
                 System.out.println("==Записан файл. Размер:" + file.length());
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }

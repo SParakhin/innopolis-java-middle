@@ -11,13 +11,17 @@ package part01.lesson08.task01;
 
 import part01.lesson08.task01.entity.Person;
 
+import java.util.Properties;
+
 import static part01.lesson08.task01.solution.Serialization.deSerialize;
 import static part01.lesson08.task01.solution.Serialization.serialize;
 import static part01.lesson08.task01.util.ReadProperties.getProperties;
 
 public class Main {
 
-    private static final String SERIALIZED_FILE = getProperties("serializedFile");
+    private static final Properties prop = getProperties();
+    private static final String SERIALIZED_FILE = prop.getProperty("serializedFile");
+
 
     public static void main(String[] args) {
 

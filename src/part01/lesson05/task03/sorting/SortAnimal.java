@@ -25,9 +25,3 @@ public class SortAnimal implements Comparator<Animal> {
         return o1.getWeight() - o2.getWeight();
     }
 }
-
-
-
-
-
-

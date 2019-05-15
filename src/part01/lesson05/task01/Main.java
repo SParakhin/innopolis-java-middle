@@ -1,9 +1,9 @@
 /**
  * ДЗ_4
  * Разработать программу – картотеку домашних животных. У каждого животного есть уникальный идентификационный номер, кличка, хозяин (объект класс Person с полями – имя, возраст, пол), вес.
- *
+ * <p>
  * Реализовать:
- *
+ * <p>
  * метод добавления животного в общий список (учесть, что добавление дубликатов должно приводить к исключительной ситуации)
  * поиск животного по его кличке (поиск должен быть эффективным)
  * изменение данных животного по его идентификатору
@@ -15,7 +15,9 @@ package part01.lesson05.task01;
 
 import part01.lesson05.task01.entity.Animal;
 import part01.lesson05.task01.entity.Person;
+import part01.lesson05.task01.entity.Sex;
 import part01.lesson05.task01.sorting.SortAnimal;
+
 import java.util.*;
 
 public class Main {
@@ -24,13 +26,13 @@ public class Main {
 
         Set<Animal> animals = new HashSet<>();
         Animal animal = new Animal(1, "Васька", 6);
-        animal.setPerson(new Person("Сергей", 44, "мужской"));
+        animal.setPerson(new Person("Сергей", 44, Sex.МУЖСКОЙ));
         Animal animal2 = new Animal(2, "Пушок", 3);
-        animal2.setPerson(new Person("Иван", 32, "мужской"));
+        animal2.setPerson(new Person("Иван", 32, Sex.МУЖСКОЙ));
         Animal animal3 = new Animal(3, "Мурка", 12);
-        animal3.setPerson(new Person("Алина", 32, "женский"));
+        animal3.setPerson(new Person("Алина", 32, Sex.ЖЕНСКИЙ));
         Animal animal4 = new Animal(4, "Черныш", 11);
-        animal4.setPerson(new Person("Надежда", 28, "женский"));
+        animal4.setPerson(new Person("Надежда", 28, Sex.ЖЕНСКИЙ));
 
         addAnimal(animals, animal);
         addAnimal(animals, animal);
@@ -46,7 +48,7 @@ public class Main {
         System.out.println("=========================");
         System.out.println("Найдено совпадение по имени " + getAnimalByName(animals, "Васька"));
         System.out.println("Найдено совпадение по id " + getAnimalById(animals, 2));
-        System.out.println("У питомца с id 1 изменено имя и данные владельца " + updateAnimal(getAnimalById(animals, 1), "Мурзик", new Person("Наташа", 22, "женский")));
+        System.out.println("У питомца с id 1 изменено имя и данные владельца " + updateAnimal(getAnimalById(animals, 1), "Мурзик", new Person("Наташа", 22, Sex.ЖЕНСКИЙ)));
 
         List<Animal> sortedAnimalSet = new ArrayList<>(animals);
         Collections.sort(sortedAnimalSet, new SortAnimal());
@@ -74,8 +76,8 @@ public class Main {
     /**
      * Поиск животного по id
      *
-     * @param animals Списко животных для поиска
-     * @param id      Уникальный идентификационный номер животного
+     * @param animals Список животных для поиска
+     * @param id      Уникальный идентификационный номер животного.
      * @return
      */
     static Animal getAnimalById(Set<Animal> animals, int id) {

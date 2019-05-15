@@ -22,6 +22,5 @@ public class Main {
         objectBox.addAll("строка");
         objectBox.addAll(45689);
         objectBox.dump();
-
     }
 }

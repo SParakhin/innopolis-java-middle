@@ -12,7 +12,6 @@
 package part01.lesson06.task01;
 
 import java.util.*;
-
 import static part01.lesson06.task01.solution.Solution.readTextFromFile;
 import static part01.lesson06.task01.solution.Solution.writeTextToFile;
 
