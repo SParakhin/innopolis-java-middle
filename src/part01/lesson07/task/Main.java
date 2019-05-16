@@ -13,7 +13,7 @@
  * что будет гораздо быстрее
  */
 
-package part01.lesson07.task01;
+package part01.lesson07.task;
 
 import java.math.BigInteger;
 import java.util.stream.IntStream;
@@ -21,7 +21,7 @@ import java.util.stream.IntStream;
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println(getFactorial(200));
+        System.out.println(getFactorial(15000));
     }
 
     public static BigInteger getFactorial(int n) {
