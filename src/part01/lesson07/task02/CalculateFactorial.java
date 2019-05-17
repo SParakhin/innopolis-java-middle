@@ -1,4 +1,4 @@
-package part01.lesson07.task01;
+package part01.lesson07.task02;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -43,6 +43,6 @@ public class CalculateFactorial {
             answer = answer.multiply(future.get());
             executor.shutdown();
         }
-        System.out.println("Factorial " + number + "=" + answer);
+        System.out.println("Main " + number + "=" + answer);
     }
 }

@@ -1,4 +1,4 @@
-package part01.lesson07.task01;
+package part01.lesson07.task02;
 
 import java.math.BigInteger;
 import java.util.concurrent.Callable;
