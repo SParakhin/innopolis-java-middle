@@ -18,12 +18,9 @@
  */
 package part01.lesson09.task01;
 
-import javax.tools.JavaCompiler;
-import javax.tools.ToolProvider;
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.Scanner;
+import static part01.lesson09.task01.loader.CustomClassLoader.*;
 
 public class Main {
 
@@ -32,48 +29,5 @@ public class Main {
         getMethodFromConsole();
         customCompiler();
         useCustomClassLoader();
-    }
-
-    static void useCustomClassLoader() throws InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        CustomClassLoader customClassLoader = new CustomClassLoader();
-        Class<?> c = customClassLoader.findClass("part01.lesson09.task01.out.SomeClass");
-        Object ob = c.newInstance();
-        Method md = c.getMethod("doWork");
-        md.invoke(ob);
-    }
-
-    static void customCompiler() {
-        JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
-        int result = compiler.run(null, null, null,
-                new File("src/part01/lesson09/task01/out/SomeClass.java").getAbsolutePath());
-        if (result == 0) {
-            System.out.println("compilation done");
-        }
-    }
-
-    static void getMethodFromConsole() {
-        Scanner s = new Scanner(System.in);
-        File file = new File("src/part01/lesson09/task01/out/SomeClass.java");
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
-            bw.write("package part01.lesson09.task01.out;\n");
-            bw.write("import part01.lesson09.task01.Worker;\n");
-            bw.write("public class SomeClass implements Worker{\n");
-            bw.write("public void doWork() {\n");
-            bw.write("System.out.print(\"\\\"Hello world !!!\\\"\");\n");
-
-//            while (true) {
-//                String line = s.nextLine();
-//                if (line.equals("")) {
-//                    break;
-//                }
-//                bw.write(line);
-//            }
-
-            bw.write("}\n");
-            bw.write("}");
-            bw.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }
