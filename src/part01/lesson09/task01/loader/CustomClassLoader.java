@@ -8,7 +8,6 @@ import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Properties;
-import java.util.Scanner;
 
 import static part01.lesson09.task01.util.ReadProperties.getProperties;
 
@@ -43,28 +42,5 @@ public class CustomClassLoader extends ClassLoader {
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
         compiler.run(null, null, null,
                 String.valueOf(new File(JAVA_FILE)));
-    }
-
-    public static void getMethodFromConsole() {
-        Scanner s = new Scanner(System.in);
-        File file = new File(JAVA_FILE);
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
-            bw.write("package part01.lesson09.task01.out;\n");
-            bw.write("import part01.lesson09.task01.interfaces.Worker;\n");
-            bw.write("public class SomeClass implements Worker{\n");
-            bw.write("public void doWork() {\n");
-            while (true) {
-                String line = s.nextLine();
-                if (line.equals("")) {
-                    break;
-                }
-                bw.write(line);
-            }
-            bw.write("}\n");
-            bw.write("}");
-            bw.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }
