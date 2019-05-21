@@ -18,13 +18,12 @@
  */
 package part01.lesson09.task01;
 
-import java.io.*;
-import java.lang.reflect.InvocationTargetException;
 import static part01.lesson09.task01.loader.CustomClassLoader.*;
+import static part01.lesson09.task01.util.CreateFileForCompile.getMethodFromConsole;
 
 public class Main {
 
-    public static void main(String[] args) throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException, ClassNotFoundException, IOException {
+    public static void main(String[] args) throws Exception {
 
         getMethodFromConsole();
         customCompiler();
