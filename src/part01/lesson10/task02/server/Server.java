@@ -68,36 +68,22 @@ public class Server {
                             userMap.put(username, out);
                         }
                         sendMessage(!isRegistered);
+                        newUserNotification();
                     } while (isRegistered);
 
                     while (true) {
                         message = (String) in.readObject();
                         msgTokens = message.split(" ");
                         if (msgTokens[0].charAt(0) == '@') {
-                            message = message.replaceFirst(msgTokens[0] + " ", "");
-                            receiver = msgTokens[0].replaceFirst("@", "");
-                            recConn = userMap.get(receiver);
-                            if (recConn == null) {
-                                sendMessage("Пользователь " + receiver + " не существует");
-                            } else {
-                                System.out.println("Личное сообщение от " + username + " для " + receiver);
-                                sendMessage(recConn, "Личное сообщение от " + username + " : " + message);
-                            }
+                            sendUnicastMessage();
                         } else {
-                            for (String entry : userMap.keySet()) {
-                                String user = entry;
-                                if (!(user.equalsIgnoreCase(username))) {
-                                    System.out.println("Сообщение от " + username + " to " + user);
-                                    recConn = userMap.get(user);
-                                    sendMessage(recConn, "Сообщение от " + username + " : " + message);
-                                }
-                            }
+                            sendBroadcastMessage();
                         }
                     }
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 }
-            } catch (IOException e) {
+            } catch (Exception e) {
                 downService();
             } finally {
                 downService();
@@ -106,11 +92,53 @@ public class Server {
         }
 
         /**
+         * Метод отправки личного сообщения unicast
+         */
+        void sendUnicastMessage() {
+            message = message.replaceFirst(msgTokens[0] + " ", "");
+            receiver = msgTokens[0].replaceFirst("@", "");
+            recConn = userMap.get(receiver);
+            if (recConn == null) {
+                sendMessage("Пользователь " + receiver + " не существует");
+            } else {
+                System.out.println("Личное сообщение от " + username + " для " + receiver);
+                sendMessage(recConn, "Личное сообщение от " + username + " : " + message);
+            }
+        }
+
+        /**
+         * Метод пересылки сообщения для всех пользователей broadcast
+         */
+        void sendBroadcastMessage() {
+            for (String entry : userMap.keySet()) {
+                String user = entry;
+                if (!(user.equalsIgnoreCase(username))) {
+                    System.out.println("Сообщение от " + username + " to " + user);
+                    recConn = userMap.get(user);
+                    sendMessage(recConn, "Сообщение от " + username + " : " + message);
+                }
+            }
+        }
+
+        /**
+         * Метод для уведомления подключеннх клиентов о новом участнике
+         */
+        void newUserNotification() {
+            for (String entry : userMap.keySet()) {
+                String user = entry;
+                if (!(user.equalsIgnoreCase(username))) {
+                    recConn = userMap.get(user);
+                    sendMessage(recConn, "Присоединился к чату " + username);
+                }
+            }
+        }
+
+        /**
          * Метод подтверждения регистрации клиента
          *
          * @param status
          */
-        public void sendMessage(boolean status) {
+        void sendMessage(boolean status) {
             try {
                 out.writeObject(status);
                 out.flush();
@@ -123,16 +151,16 @@ public class Server {
         }
 
         /**
-         * Метод для для уведомления о несуществующем пользователе при попытке отправить личное сообщение
+         * Метод для уведомления о несуществующем пользователе при попытке отправить личное сообщение
          *
          * @param status
          */
-        public void sendMessage(String status) {
+        void sendMessage(String status) {
             try {
                 out.writeObject(status);
                 out.flush();
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
 
@@ -142,19 +170,19 @@ public class Server {
          * @param oos
          * @param msg
          */
-        public void sendMessage(ObjectOutputStream oos, String msg) {
+        void sendMessage(ObjectOutputStream oos, String msg) {
             try {
                 oos.writeObject(msg);
                 oos.flush();
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
 
         /**
          * Метод для удаления клиента из чата при вводе клиентом "quit"
          */
-        private void downService() {
+        void downService() {
             try {
                 if (!socket.isClosed()) {
                     for (Handler handler : handlerList) {
