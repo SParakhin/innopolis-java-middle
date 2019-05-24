@@ -34,7 +34,6 @@ public class Client {
                     sendToServer(username);
                     registered = (boolean) in.readObject();
                     if (registered == true) {
-                        //show the message to the user
                         System.out.println("Вы зарегистрированы : " + username);
                     } else {
                         tries++;
