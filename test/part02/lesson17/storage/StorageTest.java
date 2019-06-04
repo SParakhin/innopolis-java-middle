@@ -13,7 +13,7 @@ class StorageTest {
     private static Connection connection;
 
     @BeforeAll
-    static void initConnection() throws SQLException, ClassNotFoundException {
+    public static void initConnection() throws SQLException, ClassNotFoundException {
         connection = ConnectorDB.getConnection();
     }
 
@@ -23,7 +23,7 @@ class StorageTest {
      * @throws SQLException
      */
     @Test
-    void testConnection() throws SQLException {
+    public void testConnection() throws SQLException {
         Assertions.assertNotNull(connection);
         assertTrue(connection.isValid(0));
     }
@@ -32,7 +32,7 @@ class StorageTest {
      * Тест на пакетное добавление записей.
      */
     @Test
-    void testAddBatch() throws SQLException {
+    public void testAddBatch() throws SQLException {
         int expected = 10;
         int actual = addBatch(connection);
         Assertions.assertEquals(expected, actual);
@@ -42,7 +42,7 @@ class StorageTest {
      * Тест на параметризированную вставку записей в БД
      */
     @Test
-    void testAddStatement() {
+    public void testAddStatement() {
         boolean actual = addStatement(connection);
         Assertions.assertEquals(false, actual);
     }
@@ -51,7 +51,7 @@ class StorageTest {
      * Тест на параметризированную выборку записей из БД
      */
     @Test
-    void testGetQuery() {
+    public void testGetQuery() {
         String SQL_SELECT_FROM_USER = "SELECT * FROM user WHERE login_id=? AND name=?";
         int actual = 0;
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_FROM_USER)) {
@@ -76,7 +76,7 @@ class StorageTest {
      * @throws SQLException
      */
     @Test
-    void testAddManualTransaction() throws SQLException {
+    public void testAddManualTransaction() throws SQLException {
         String SQL_SELECT_FROM_USER = "SELECT * FROM user";
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(SQL_SELECT_FROM_USER);
@@ -91,7 +91,7 @@ class StorageTest {
     }
 
     @AfterAll
-    static void testCloseConnection() throws SQLException {
+    public static void testCloseConnection() throws SQLException {
         connection.close();
         assertTrue(connection.isClosed());
         Assertions.assertFalse(connection.isValid(0));
