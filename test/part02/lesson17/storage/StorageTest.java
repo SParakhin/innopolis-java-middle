@@ -12,12 +12,9 @@ class StorageTest {
 
     private static Connection connection;
 
-    {
-        try {
-            connection = ConnectorDB.getConnection();
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+    @BeforeAll
+    static void initConnection() throws SQLException, ClassNotFoundException {
+        connection = ConnectorDB.getConnection();
     }
 
     /**
