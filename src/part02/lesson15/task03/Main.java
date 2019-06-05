@@ -13,18 +13,24 @@
  * a)      Выполнить 2-3 SQL операции на ваше усмотрение (например, Insert в 3 таблицы – USER, ROLE, USER_ROLE) между sql операциями установить логическую точку сохранения(SAVEPOINT)
  * б)   Выполнить 2-3 SQL операции на ваше усмотрение (например, Insert в 3 таблицы – USER, ROLE, USER_ROLE) между sql операциями установить точку сохранения (SAVEPOINT A), намеренно ввести некорректные данные на последней операции, что бы транзакция откатилась к логической точке SAVEPOINT A
  */
-package part02.lesson15.task02;
+package part02.lesson15.task03;
 
-import part02.lesson15.task02.util.ConnectorDB;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
-import static part02.lesson15.task02.dao.UserDAO.*;
+
+import static part02.lesson15.task03.UserDAO.*;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ClassNotFoundException {
 
-        try (Connection connection = ConnectorDB.getConnection()) {
+        String url = "jdbc:mysql://localhost:3306/lesson15?serverTimezone=UTC";
+        String userName = "root";
+        String password = "root";
+        Class.forName("com.mysql.cj.jdbc.Driver");
+
+        try (Connection connection = DriverManager.getConnection(url, userName, password)) {
             addStatement(connection);
             addBatch(connection);
             System.out.println("===Результирующий набор по ID и name");
