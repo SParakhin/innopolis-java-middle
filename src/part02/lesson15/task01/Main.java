@@ -15,22 +15,16 @@
  */
 package part02.lesson15.task01;
 
+import part02.lesson15.task01.util.ConnectorDB;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
-
-import static part02.lesson15.task01.UserDAO.*;
+import static part02.lesson15.task01.srotage.Storage.*;
 
 public class Main {
 
-    public static void main(String[] args) throws ClassNotFoundException {
+    public static void main(String[] args) {
 
-        String url = "jdbc:mysql://localhost:3306/lesson15?serverTimezone=UTC";
-        String userName = "root";
-        String password = "root";
-        Class.forName("com.mysql.cj.jdbc.Driver");
-
-        try (Connection connection = DriverManager.getConnection(url, userName, password)) {
+        try (Connection connection = ConnectorDB.getConnection()) {
             addStatement(connection);
             addBatch(connection);
             System.out.println("===Результирующий набор по ID и name");

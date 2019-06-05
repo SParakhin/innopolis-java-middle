@@ -1,8 +1,8 @@
-package part02.lesson15.task02.dao;
+package part02.lesson15.task01.srotage;
 
 import java.sql.*;
 
-public class UserDAO {
+public class Storage {
 
     private static final String SQL_INSERT_INTO_USER = "INSERT INTO user (name,birthday,login_id,city,email) VALUES (?,?,?,?,?) ";
     private static final String SQL_SELECT_INTO_USER = "SELECT * FROM user WHERE login_id=? AND name=?";
