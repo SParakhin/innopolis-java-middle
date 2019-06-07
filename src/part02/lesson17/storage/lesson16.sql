@@ -31,3 +31,4 @@ CREATE TABLE `logs` (
                       `exception` varchar(500) DEFAULT NULL,
                       PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8;
+;
