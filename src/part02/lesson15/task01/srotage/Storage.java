@@ -8,7 +8,6 @@ public class Storage {
     private static final String SQL_SELECT_INTO_USER = "SELECT * FROM user WHERE login_id=? AND name=?";
     private static final String SQL_SELECT_INTO_USER_ROLE = "INSERT INTO user_role (user_id,role_id) VALUES (?,?)";
 
-
     /**
      * Метод групповой записи данных(INSERT) в таблицу использованием batch процесс
      *

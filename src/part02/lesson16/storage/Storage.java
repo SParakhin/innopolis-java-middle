@@ -9,9 +9,10 @@ import static org.apache.logging.log4j.LogManager.getLogger;
 public class Storage {
 
     private static final String SQL_INSERT_INTO_USER = "INSERT INTO user (name,birthday,login_id,city,email) VALUES (?,?,?,?,?) ";
-    private static final String SQL_SELECT_INTO_USER = "SELECT * FROM user WHERE login_id=? AND name=?";
-    private static final String SQL_SELECT_INTO_USER_ROLE = "INSERT INTO user_role (user_id,role_id) VALUES (?,?)";
-    private final static Logger logger = getLogger();
+    private static final String SQL_SELECT_FROM_USER = "SELECT * FROM user WHERE login_id=? AND name=?";
+    private static final String SQL_SELECT_FROM_USER_ROLE = "INSERT INTO user_role (user_id,role_id) VALUES (?,?)";
+    private final static Logger loggerDB = getLogger("JDBCAppender");
+    private final static Logger loggerConsole = getLogger("STDOUT");
 
     /**
      * Метод групповой записи данных(INSERT) в таблицу использованием batch процесс
@@ -31,11 +32,9 @@ public class Storage {
                 preparedStatement.addBatch();
             }
             int[] i = preparedStatement.executeBatch();
-            System.out.println("Добавлено " + i.length + " записей в таблицу user");
-            logger.info("Successful");
+            loggerConsole.debug("Добавлено " + i.length + " записей в таблицу user");
         } catch (SQLException e) {
-            logger.info("Error", e);
-            e.printStackTrace();
+            loggerDB.error("Ошибка addButch", e);
         }
     }
 
@@ -45,6 +44,7 @@ public class Storage {
      * @param connection
      * @throws SQLException
      */
+
     public static void addStatement(Connection connection) {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_INSERT_INTO_USER)) {
             preparedStatement.setString(1, "Sergey");
@@ -53,10 +53,9 @@ public class Storage {
             preparedStatement.setString(4, "Orel");
             preparedStatement.setString(5, "ormts@mail.ru");
             preparedStatement.execute();
-            logger.info("Successful");
+            loggerConsole.debug("Успешная транзакция");
         } catch (SQLException e) {
-            logger.info("Error", e);
-            e.printStackTrace();
+            loggerDB.error("Ошибка транзакции", e);
         }
     }
 
@@ -66,24 +65,22 @@ public class Storage {
      * @param connection
      * @throws SQLException
      */
-    public static void getQuery(Connection connection) {
-        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_INTO_USER)) {
+    public static int getQuery(Connection connection) {
+        int numberOfRecordsSelect = 0;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_FROM_USER)) {
             preparedStatement.setInt(1, 1);
             preparedStatement.setString(2, "Sergey");
             ResultSet rs = preparedStatement.executeQuery();
-            int columns = rs.getMetaData().getColumnCount();
-            while (rs.next()) {
-                for (int i = 1; i <= columns; i++) {
-                    System.out.print(rs.getString(i) + "\t");
-                }
-                System.out.println();
+            if (rs.last()) {
+                numberOfRecordsSelect = rs.getRow();
             }
-            logger.info("Request completed");
-            preparedStatement.close();
+            loggerConsole.debug("Результат запроса: " + numberOfRecordsSelect);
+            loggerDB.info("Запрос выполнен успешно - лог в базу");
+            return numberOfRecordsSelect;
         } catch (SQLException e) {
-            logger.info("Error", e);
-            e.printStackTrace();
+            loggerDB.error("Ошибка транзакции", e);
         }
+        return 0;
     }
 
     /**
@@ -113,25 +110,23 @@ public class Storage {
             preparedStatement.setString(5, "yyy@mail.ru");
             preparedStatement.execute();
             connection.commit();
+            loggerConsole.debug("Успешная транзакция");
         } catch (SQLException e) {
-            logger.error("Partil transaction", e);
+            loggerDB.error("Откат транзакции к точке сохранения - лог запись в базу исключения", e);
             connection.rollback(savepoint);
             connection.commit();
-            logger.info("Commit successful");
         }
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_INTO_USER_ROLE)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_FROM_USER_ROLE)) {
             preparedStatement.setInt(1, 1);
             preparedStatement.setInt(2, 2);
             preparedStatement.addBatch();
             int[] j = preparedStatement.executeBatch();
-            System.out.println("Добавлено " + j.length + " записей в таблицу user_role в режиме ручной транзакции ");
             connection.commit();
-            logger.info("Commit successful");
+            loggerConsole.info("Успешно");
         } catch (SQLException e) {
-            e.printStackTrace();
             connection.rollback();
-            logger.info("Transaction cancel");
+            loggerDB.error("Отмена транзакции - запись в базу");
         }
         connection.setAutoCommit(true);
     }
