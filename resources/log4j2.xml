@@ -2,10 +2,11 @@
 <Configuration status="INFO">
     <Appenders>
         <File name="FILE" fileName="src\part02\lesson16\log\logging.log" append="true">
-            <PatternLayout pattern="%d %-5p [%t] %C{2} (%F:%L) - %m%n"/>
+            <!--<PatternLayout pattern="%d %-5p [%t] %C{2} (%F:%L) - %m%n"/>-->
         </File>
         <Console name="STDOUT" target="SYSTEM_OUT">
             <PatternLayout pattern="%d %-5p [%t] %C{2} (%F:%L) - %m%n"/>
+            <!--<PatternLayout pattern="%n%m"/>-->
         </Console>
         <JDBC name="JDBCAppender" tableName="logs">
             <ConnectionFactory
@@ -18,11 +19,14 @@
         </JDBC>
     </Appenders>
     <Loggers>
-        <Logger name="org.apache.log4j.xml" level="info"/>
+        <Logger name="JDBCAppender" level="info">
+            <AppenderRef ref="JDBCAppender"/>
+        </Logger>
+        <Logger name="STDOUT" level="debug"/>
         <Root level="info">
             <AppenderRef ref="FILE"/>
             <AppenderRef ref="STDOUT"/>
-            <AppenderRef ref="JDBCAppender"/>
+            <!--<AppenderRef ref="JDBCAppender"/>-->
         </Root>
     </Loggers>
 </Configuration>

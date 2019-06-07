@@ -12,6 +12,22 @@
  * 4)      Перевести connection в ручное управление транзакциями
  * a)      Выполнить 2-3 SQL операции на ваше усмотрение (например, Insert в 3 таблицы – USER, ROLE, USER_ROLE) между sql операциями установить логическую точку сохранения(SAVEPOINT)
  * б)   Выполнить 2-3 SQL операции на ваше усмотрение (например, Insert в 3 таблицы – USER, ROLE, USER_ROLE) между sql операциями установить точку сохранения (SAVEPOINT A), намеренно ввести некорректные данные на последней операции, что бы транзакция откатилась к логической точке SAVEPOINT A
+ * <p>
+ * ДЗ_14
+ * Взять за основу ДЗ_13,
+ * покрыть код логированием
+ * в основных блоках try покрыть уровнем INFO
+ * с исключениях catch покрыть уровнем ERROR
+ * настроить конфигурацию логера, что бы все логи записывались в БД, таблица LOGS,
+ * колонки ID, DATE, LOG_LEVEL, MESSAGE, EXCEPTION
+ * <p>
+ * ДЗ_14
+ * Взять за основу ДЗ_13,
+ * покрыть код логированием
+ * в основных блоках try покрыть уровнем INFO
+ * с исключениях catch покрыть уровнем ERROR
+ * настроить конфигурацию логера, что бы все логи записывались в БД, таблица LOGS,
+ * колонки ID, DATE, LOG_LEVEL, MESSAGE, EXCEPTION
  */
 
 /**
@@ -25,25 +41,27 @@
  */
 package part02.lesson16;
 
+import org.apache.logging.log4j.Logger;
 import part02.lesson16.util.ConnectorDB;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import static org.apache.logging.log4j.LogManager.getLogger;
 import static part02.lesson16.storage.Storage.*;
 
 public class Main {
 
-    public static void main(String[] args) throws ClassNotFoundException, SQLException {
+    private final static Logger logger = getLogger("JDBCAppender");
 
+    public static void main(String[] args) {
         try (Connection connection = ConnectorDB.getConnection()) {
             addStatement(connection);
             addBatch(connection);
-            System.out.println("===Результирующий набор по ID и name");
             getQuery(connection);
             addManualTransaction(connection);
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Ошибка соединения с БД");
         }
     }
 }
